@@ -15,3 +15,13 @@ You can also copy the `.env.example` file:
 ```bash
 cp .env.example .env
 ```
+
+
+<p align="center">
+  <img src="frontend/src/Picture3.jpg" width="48%">
+  <img src="frontend/src/Picture4.jpg" width="48%">
+</p>
+
+<p align="center">
+  <img src="frontend/src/Picture5.jpg" width="48%">
+</p>
