@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 from pathlib import Path
 from typing import List, Tuple, Optional
-from sentence_transformers import SentenceTransformer
+from sklearn.feature_extraction.text import HashingVectorizer
 import logging
 
 logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
@@ -25,11 +25,15 @@ class VectorStore:
         user_id: str = "guest"   # ✅ NEW PARAM
     ):
 
-        # ✅ Load embedding model ONLY from local cache
-        self.embedding_model = SentenceTransformer(
-            embedding_model,
-            device="cpu",
-            cache_folder=r"C:\Users\HP1101\.cache\huggingface\hub"
+        # Lightweight, stateless text features avoid loading PyTorch,
+        # Transformers, and SentenceTransformer into the small hosting instance.
+        # This is lexical retrieval rather than neural semantic embeddings.
+        self.embedding_model = HashingVectorizer(
+            n_features=384,
+            alternate_sign=False,
+            norm="l2",
+            lowercase=True,
+            ngram_range=(1, 2)
         )
 
         # ✅ CREATE USER-SPECIFIC VECTOR DIRECTORY
@@ -44,7 +48,7 @@ class VectorStore:
         print(f"📂 VectorStore initialized for user: {user_id}")
         print(f"📁 Storage path: {self.vector_db_dir}")
 
-        self.dimension = self.embedding_model.get_sentence_embedding_dimension()
+        self.dimension = 384
 
         # In-memory cache
         self.documents = {}
@@ -61,13 +65,8 @@ class VectorStore:
 
     def create_embeddings(self, texts: List[str]) -> np.ndarray:
 
-        embeddings = self.embedding_model.encode(
-            texts,
-            show_progress_bar=False,
-            convert_to_numpy=True
-        )
-
-        return embeddings.astype("float32")
+        embeddings = self.embedding_model.transform(texts)
+        return embeddings.toarray().astype("float32")
 
     # ================= ADD DOCUMENT =================
 
