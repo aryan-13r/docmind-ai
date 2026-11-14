@@ -40,7 +40,7 @@ app.mount(
 # Configure CORS. Restrict origins to the deployed frontend when known.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
