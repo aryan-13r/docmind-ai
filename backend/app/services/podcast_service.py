@@ -37,7 +37,6 @@ class PodcastService:
 
         print("🎙️ Podcast Service initialized")
         print("🎤 Voice Map:", self.voice_ids)
-        print("ELEVENLABS KEY:", self.elevenlabs_api_key)
 
     # =============================
     # LLM Query
