@@ -24,6 +24,7 @@ router = APIRouter(
 
 from app.core.config import settings
 
+oauth = OAuth()
 oauth.register(
     name="google",
     client_id=settings.google_client_id,
