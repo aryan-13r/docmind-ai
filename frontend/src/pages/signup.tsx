@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import { saveToken } from "../auth/authStore";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config/api";
 
 export default function Signup() {
 
@@ -20,7 +21,7 @@ export default function Signup() {
     setFadeOut(true);
 
     setTimeout(() => {
-      window.location.href = "http://localhost:8000/auth/google";
+      window.location.href = `${API_BASE_URL}/auth/google`;
     }, 400);
   };
 
@@ -68,7 +69,7 @@ export default function Signup() {
 
     try {
 
-      const res = await fetch("http://localhost:8000/auth/signup", {
+      const res = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
