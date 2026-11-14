@@ -9,6 +9,7 @@ import Signup from "./pages/signup";
 
 import type { Chat, Message } from "./types/chat";
 import { getToken } from "./auth/authStore";
+import { API_BASE_URL } from "./config/api";
 
 function Dashboard() {
 
@@ -79,7 +80,7 @@ const [theme, setTheme] = useState<"dark" | "light">(() => {
     const token = getToken();
     if (!token) return;
 
-    const res = await fetch("http://localhost:8000/history", {
+    const res = await fetch(`${API_BASE_URL}/history`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -176,7 +177,7 @@ useEffect(() => {
     }
 
     const res = await fetch(
-      "http://localhost:8000/api/documents/upload",
+      `${API_BASE_URL}/api/documents/upload`,
       {
         method: "POST",
         headers,
@@ -233,7 +234,7 @@ useEffect(() => {
 
   try {
 
-    await fetch(`http://localhost:8000/delete-chat/${chatId}`, {
+    await fetch(`${API_BASE_URL}/delete-chat/${chatId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${getToken()}`
@@ -306,7 +307,7 @@ const handleDocumentRemoved = () => {
     try {
 
       const res = await fetch(
-        "http://localhost:8000/api/chat",
+        `${API_BASE_URL}/api/chat`,
         {
           method: "POST",
           headers,
@@ -371,7 +372,7 @@ const handleDocumentRemoved = () => {
 
 
     if (autoSave) {
-      const saveRes = await fetch("http://localhost:8000/save-chat", {
+      const saveRes = await fetch(`${API_BASE_URL}/save-chat`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
