@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken, saveToken } from "../auth/authStore";
 import "../styles/login.css";
+import { API_BASE_URL } from "../config/api";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ const Login: React.FC = () => {
     setFadeOut(true);
 
     setTimeout(() => {
-      window.location.href = "http://localhost:8000/auth/google";
+      window.location.href = `${API_BASE_URL}/auth/google`;
     }, 400); // thoda smooth delay
   };
 
@@ -60,7 +61,7 @@ const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/auth/login", {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
