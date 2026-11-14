@@ -3,6 +3,7 @@ import { Play, Pause, Download, Loader, Mic2 } from "lucide-react";
 import axios from "axios";
 import "./PodcastPanel.css";
 import { getToken } from "../auth/authStore";
+import { API_BASE_URL } from "../config/api";
 
 interface PodcastPanelProps {
   theme: "light" | "dark";
@@ -18,9 +19,6 @@ const PodcastPanel: React.FC<PodcastPanelProps> = ({ theme, documentId }) => {
   const [duration, setDuration] = useState<number>(0);
 
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const API_BASE_URL =
-    process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 
   /* ================= GENERATE PODCAST ================= */
