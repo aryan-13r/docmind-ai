@@ -1,3 +1,5 @@
+import os
+
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
@@ -79,7 +81,9 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
 @router.get("/google")
 async def login_google(request: Request):
 
-    redirect_uri = "http://localhost:8000/auth/google/callback"
+    redirect_uri = os.getenv("GOOGLE_REDIRECT_URI") or (
+        f"{os.getenv('RENDER_EXTERNAL_URL', 'http://localhost:8000').rstrip('/')}/auth/google/callback"
+    )
 
     return await oauth.google.authorize_redirect(
         request,
@@ -136,7 +140,7 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
     )
 
     # Frontend redirect
-    frontend_url = "http://localhost:3000"
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")
 
     redirect_url = (
         f"{frontend_url}/?token={access_token}"
