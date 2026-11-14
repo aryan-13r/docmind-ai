@@ -7,6 +7,7 @@ import GeneralSection from "./GeneralSection";
 import NotificationSection from "./NotificationSection";
 import AppearanceSection from "./AppearanceSection";
 import { getToken } from "../auth/authStore";
+import { API_BASE_URL } from "../config/api";
 
 interface SidebarProps {
   chats: Chat[];
@@ -443,7 +444,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     onClearAll={async () => {
 
                       try {
-                        await fetch("http://localhost:8000/delete-all-chats", {
+                        await fetch(`${API_BASE_URL}/delete-all-chats`, {
                           method: "DELETE",
                           headers: {
                           Authorization: `Bearer ${getToken()}`
